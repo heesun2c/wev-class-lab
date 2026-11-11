@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>유사동의어 퀴즈 챗봇 🤖</title>
+    <link rel="stylesheet" href="/synonym-quiz/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-robot"></i> 유사동의어 챗봇</h1>
+                <p class="subtitle">비슷하지만 다른 단어들의 용례를 배워보세요!</p>
+            </div>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="totalQuizzes">0</span>
+                    <small>완료</small>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-star"></i>
+                    <span id="correctAnswers">0</span>
+                    <small>정답</small>
+                </div>
+                <div class="stat-item accuracy">
+                    <i class="fas fa-chart-line"></i>
+                    <span id="accuracy">0%</span>
+                    <small>정확도</small>
+                </div>
+            </div>
+        </header>
+
+        <!-- 메인 챗봇 영역 -->
+        <main class="main-content">
+            <!-- 챗봇 대화창 -->
+            <div class="chat-container" id="chatContainer">
+                <!-- 초기 메시지 -->
+                <div class="message bot-message">
+                    <div class="message-avatar bot-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <p>안녕하세요! 👋 유사동의어 학습 챗봇입니다.</p>
+                        <p>같은 뜻 같지만 실제로는 다르게 쓰이는 단어들의 차이를 배워볼까요?</p>
+                        <p>시작하려면 아래에서 <strong>학습할 단어 쌍</strong>을 선택해주세요!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 입력 영역 -->
+            <div class="input-container">
+                <!-- 단어 선택 모드 -->
+                <div class="word-selector" id="wordSelector">
+                    <button class="word-btn" data-pair="STOP_FINISH">
+                        <i class="fas fa-hand-paper"></i>
+                        <span class="word-title">
+                            <strong style="color: #ef4444;">STOP</strong> 
+                            <span class="vs-text">vs</span> 
+                            <strong style="color: #3b82f6;">FINISH</strong>
+                        </span>
+                    </button>
+                    <button class="word-btn" data-pair="SMALL_LITTLE">
+                        <i class="fas fa-compress-alt"></i>
+                        <span class="word-title">
+                            <strong style="color: #8b5cf6;">SMALL</strong> 
+                            <span class="vs-text">vs</span> 
+                            <strong style="color: #ec4899;">LITTLE</strong>
+                        </span>
+                    </button>
+                    <button class="word-btn" data-pair="BIG_LARGE">
+                        <i class="fas fa-expand-alt"></i>
+                        <span class="word-title">
+                            <strong style="color: #f59e0b;">BIG</strong> 
+                            <span class="vs-text">vs</span> 
+                            <strong style="color: #10b981;">LARGE</strong>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- 퀴즈 답변 모드 -->
+                <div class="quiz-answer-container" id="quizAnswerContainer" style="display: none;">
+                    <div class="quiz-options" id="quizOptions">
+                        <!-- 동적으로 생성됨 -->
+                    </div>
+                </div>
+
+                <!-- 다음/계속 버튼 -->
+                <div class="action-buttons" id="actionButtons" style="display: none;">
+                    <button class="action-btn next-btn" id="nextBtn">
+                        <i class="fas fa-arrow-right"></i>
+                        다음 문제
+                    </button>
+                    <button class="action-btn home-btn" id="homeBtn">
+                        <i class="fas fa-home"></i>
+                        처음으로
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- 학습 팁 사이드바 -->
+        <aside class="tips-sidebar">
+            <h3><i class="fas fa-lightbulb"></i> 학습 팁</h3>
+            <div class="tip-card">
+                <h4>💡 왜 중요할까요?</h4>
+                <p>같은 뜻이지만 실제 원어민들은 상황에 따라 다른 단어를 사용해요!</p>
+            </div>
+            <div class="tip-card">
+                <h4>🎯 학습 목표</h4>
+                <p>코퍼스 데이터를 통해 자연스러운 용례를 익혀요.</p>
+            </div>
+            <div class="tip-card" id="currentTip" style="display: none;">
+                <h4>📚 현재 학습 중</h4>
+                <p id="currentWordPair">-</p>
+                <div id="wordExplanation"></div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="/synonym-quiz/js/quizData.js"></script>
+    <script src="/synonym-quiz/js/chatbot.js"></script>
+</body>
+</html>
