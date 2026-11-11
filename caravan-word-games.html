@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Desert Caravan Word Games</title>
+<style>
+:root{--ff:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;--sand:#F3E3C3;--sand2:#E8CC98;--dune:#C98B45;--rust:#A4502A;--night:#1E2447;--night2:#2E3768;--gold:#F2B83A;--ink:#3B2716;--paper:#FFF8EA;--ok:#2F8F5B;--no:#C23B2E}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;color:var(--ink);background:var(--night);min-height:100vh}
+.sky{background:radial-gradient(1200px 400px at 70% -10%,#3C4789 0%,transparent 60%),linear-gradient(180deg,var(--night) 0%,var(--night2) 55%,#7a4a2a 100%);padding:22px 16px 0}
+.sky .star{position:absolute;color:var(--gold);font-size:22px}
+header{max-width:980px;margin:0 auto;color:#fff;position:relative}
+header .bk{font:600 13px/1 system-ui;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+header h1{margin:8px 0 6px;font-size:30px;letter-spacing:-.01em}
+header p{margin:0;color:#CFD3F0;font-size:15px}
+.dunes{height:46px;background:radial-gradient(60% 120% at 20% 100%,var(--sand2) 60%,transparent 61%),radial-gradient(50% 140% at 75% 100%,var(--dune) 60%,transparent 61%);margin-top:16px}
+nav{display:flex;gap:8px;max-width:980px;margin:0 auto;padding:14px 16px 0;flex-wrap:wrap}
+nav button{border:0;border-radius:999px;padding:11px 18px;font:700 15px/1 var(--ff);font-family:inherit;background:rgba(255,255,255,.12);color:#fff;cursor:pointer}
+nav button.on{background:var(--gold);color:var(--night)}
+main{background:var(--sand);min-height:70vh;padding:22px 16px 40px}
+.wrap{max-width:980px;margin:0 auto}
+.card{background:var(--paper);border:2px solid var(--sand2);border-radius:20px;padding:22px;box-shadow:0 6px 0 var(--sand2)}
+.hide{display:none}
+.tip{font-size:14px;color:#7A5B3A;margin:0 0 14px}
+.btn{border:0;border-radius:12px;padding:12px 18px;font:700 16px/1 var(--ff);font-family:inherit;cursor:pointer;background:var(--rust);color:#fff}
+.btn.ghost{background:#fff;color:var(--rust);border:2px solid var(--rust)}
+.btn:disabled{opacity:.45;cursor:default}
+select{font:600 15px var(--ff);font-family:inherit;padding:9px 12px;border-radius:10px;border:2px solid var(--sand2);background:#fff;color:var(--ink)}
+/* hangman */
+.hm{display:grid;grid-template-columns:240px 1fr;gap:22px;align-items:start}
+.hm svg{width:100%;background:linear-gradient(#FCEFD4,#F3DDB1);border-radius:16px}
+.hint{font-size:18px;font-weight:700;color:var(--rust)}
+.hint small{display:block;font-size:13px;color:#7A5B3A;font-weight:500;margin-top:4px}
+.slots{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.slots span{width:38px;height:48px;border-bottom:4px solid var(--ink);font:800 30px/48px ui-monospace,monospace;text-align:center;text-transform:lowercase}
+.keys{display:flex;flex-wrap:wrap;gap:6px}
+.keys button{width:40px;height:42px;border-radius:10px;border:2px solid var(--sand2);background:#fff;font:800 17px/1 var(--ff);font-family:inherit;color:var(--ink);cursor:pointer}
+.keys button.hit{background:#D7EEDD;border-color:var(--ok);color:var(--ok)}
+.keys button.miss{background:#F6D8D3;border-color:var(--no);color:var(--no)}
+.msg{margin-top:14px;min-height:26px;font-weight:700}
+.ex{margin-top:10px;padding:12px 16px;background:#FFF1CF;border-left:6px solid var(--gold);border-radius:8px;font-size:16px}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.pill{background:#fff;border:2px solid var(--sand2);border-radius:999px;padding:7px 12px;font-weight:700;font-size:14px}
+/* speed */
+.sp-top{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.timer{font:800 44px/1 ui-monospace,monospace;color:var(--night);background:#fff;border:3px solid var(--night);border-radius:16px;padding:10px 18px;min-width:130px;text-align:center}
+.timer.low{color:var(--no);border-color:var(--no)}
+.big{background:var(--night);color:#fff;border-radius:20px;padding:40px 20px;text-align:center}
+.big .w{font:800 64px/1.1 var(--ff);letter-spacing:-.01em}
+.big .k{margin-top:14px;font-size:20px;color:var(--gold)}
+.big .k.off{visibility:hidden}
+.sp-btns{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.sp-btns .btn{font-size:20px;padding:16px 26px}
+.ok{background:var(--ok)}.no{background:#8A7A68}
+.teams{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.teams div{background:#fff;border:2px solid var(--sand2);border-radius:14px;padding:12px;text-align:center}
+.teams div.on{border-color:var(--rust);box-shadow:0 0 0 3px #F3C9A8}
+.teams b{display:block;font-size:30px;color:var(--rust)}
+/* tug */
+.arena{position:relative;height:130px;background:linear-gradient(180deg,#FCEFD4 0 60%,var(--sand2) 60%);border-radius:18px;margin:6px 0 18px;overflow:hidden}
+.arena .rope{position:absolute;left:12%;right:12%;top:58px;height:6px;background:repeating-linear-gradient(90deg,#8B5E34 0 10px,#B07D48 10px 20px);border-radius:3px}
+.arena .mid{position:absolute;left:50%;top:22px;bottom:22px;border-left:3px dashed var(--rust);opacity:.5}
+.arena .side{position:absolute;top:10px;text-align:center;font-weight:800;font-size:13px}
+.arena .side span{display:block;font-size:40px;line-height:1;margin-bottom:6px;transition:transform .3s}
+.arena .l{left:14px}.arena .r{right:14px}
+.arena .bag{position:absolute;top:36px;font-size:44px;transform:translateX(-50%);transition:left .45s cubic-bezier(.3,1.4,.5,1)}
+.q{display:flex;align-items:baseline;gap:12px;justify-content:center;flex-wrap:wrap;font:800 34px/1.2 var(--ff)}
+.q .blank{min-width:150px;border-bottom:4px solid var(--rust);color:var(--rust);text-align:center}
+.qko{text-align:center;color:#7A5B3A;margin:8px 0 16px;font-size:17px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opts button{padding:16px;border-radius:14px;border:2px solid var(--sand2);background:#fff;font:700 19px/1.2 var(--ff);font-family:inherit;color:var(--ink);cursor:pointer}
+.opts button.good{background:#D7EEDD;border-color:var(--ok)}
+.opts button.bad{background:#F6D8D3;border-color:var(--no)}
+footer{background:var(--sand);text-align:center;font-size:12.5px;color:#8A6A48;padding:0 16px 22px}
+@media (max-width:720px){.hm{grid-template-columns:1fr}.hm svg{max-width:240px}.big .w{font-size:44px}.teams{grid-template-columns:repeat(2,1fr)}.q{font-size:26px}.opts{grid-template-columns:1fr}header h1{font-size:24px}}
+</style></head><body>
+<div class="sky"><header>
+<div class="bk">Season of the Sandstorms · Chapters 1–5</div>
+<h1>Desert Caravan Word Games</h1>
+<p>행맨 · 스피드 퀴즈 · 표현 줄다리기 — 모둠이 함께 하는 교실 게임 세 가지</p>
+</header><div class="dunes"></div></div>
+<div style="background:#7a4a2a"><nav>
+<button class="on" data-t="hang">① 행맨</button><button data-t="speed">② 스피드 퀴즈</button><button data-t="tug">③ 표현 줄다리기</button>
+</nav><div style="height:14px"></div></div>
+<main><div class="wrap">
+
+<section id="hang" class="card">
+<div class="meta"><span class="pill" id="hmCount">1 / 45</span>
+<span><select id="hmCh"><option value="g">바그다드의 황금시대 45</option><option value="0">필수어휘 1~5장 45</option><option value="1">필수어휘 Chapter 1</option><option value="2">Chapter 2</option><option value="3">Chapter 3</option><option value="4">Chapter 4</option><option value="5">Chapter 5</option></select></span></div>
+<p class="tip">한국어 뜻을 힌트로 철자를 맞혀 보세요. 6번 틀리기 전에 단어를 완성하면 성공!</p>
+<div class="hm">
+<svg viewBox="0 0 220 220" id="hmSvg">
+<line x1="20" y1="205" x2="200" y2="205" stroke="#8B5E34" stroke-width="6" stroke-linecap="round"/>
+<line x1="55" y1="205" x2="55" y2="25" stroke="#8B5E34" stroke-width="6" stroke-linecap="round"/>
+<line x1="52" y1="25" x2="140" y2="25" stroke="#8B5E34" stroke-width="6" stroke-linecap="round"/>
+<line x1="140" y1="25" x2="140" y2="48" stroke="#8B5E34" stroke-width="4"/>
+<g stroke="#3B2716" stroke-width="5" stroke-linecap="round" fill="none">
+<circle class="p" cx="140" cy="64" r="16"/>
+<line class="p" x1="140" y1="80" x2="140" y2="130"/>
+<line class="p" x1="140" y1="92" x2="118" y2="114"/>
+<line class="p" x1="140" y1="92" x2="162" y2="114"/>
+<line class="p" x1="140" y1="130" x2="122" y2="162"/>
+<line class="p" x1="140" y1="130" x2="158" y2="162"/>
+</g></svg>
+<div>
+<div class="hint" id="hmHint">—<small id="hmCh2"></small></div>
+<div class="slots" id="hmSlots"></div>
+<div class="keys" id="hmKeys"></div>
+<div class="msg" id="hmMsg"></div>
+<div class="ex hide" id="hmEx"></div>
+<div style="margin-top:14px;display:flex;gap:8px"><button class="btn" id="hmNext">다음 단어 ➔</button><button class="btn ghost" id="hmShow">정답 보기</button></div>
+</div></div>
+</section>
+
+<section id="speed" class="card hide">
+<p class="tip">모둠 대표가 화면을 보고 영어로 설명하면, 모둠원이 단어를 맞힙니다. 설명할 때 단어 자체와 한국어는 쓰지 않기! 모르면 과감하게 패스.</p>
+<div class="sp-top">
+<div class="timer" id="spTime">60</div>
+<select id="spSet"><option value="g">바그다드의 황금시대 45</option><option value="w">필수어휘 45</option><option value="e">핵심표현 35</option></select>
+<label style="font-weight:700;font-size:14px"><input type="checkbox" id="spKo"> 뜻 보이기 (설명자용)</label>
+<button class="btn" id="spStart">▶ 60초 시작</button>
+</div>
+<div class="big"><div class="w" id="spWord">Ready?</div><div class="k" id="spKoTxt">모둠을 고르고 시작을 누르세요</div></div>
+<div class="sp-btns"><button class="btn ok" id="spOk" disabled>⭕ 정답</button><button class="btn no" id="spPass" disabled>❌ 패스</button></div>
+<div class="teams" id="spTeams"></div>
+</section>
+
+<section id="tug" class="card hide">
+<p class="tip">빈칸에 알맞은 짝을 고르세요. 맞히면 가방이 Team Jack 쪽으로, 틀리면 낙타 Beauty 쪽으로 끌려갑니다. 정답 뒤에는 예문을 다 같이 소리 내어 읽고 넘어가세요.</p>
+<div class="meta"><span class="pill" id="tgCount">1 / 35</span><span class="pill" id="tgScore">Team Jack 0 : 0 Beauty</span></div>
+<div class="arena"><div class="rope"></div><div class="mid"></div>
+<div class="side l"><span id="tgJ">🧒👧</span>Team Jack</div>
+<div class="side r"><span id="tgB">🐪</span>Beauty</div>
+<div class="bag" id="tgBag" style="left:50%">🎒</div></div>
+<div class="q"><span id="tgStem">put</span><span class="blank" id="tgBlank">?</span></div>
+<div class="qko" id="tgKo">뜻</div>
+<div class="opts" id="tgOpts"></div>
+<div class="msg" id="tgMsg" style="text-align:center"></div>
+<div class="ex hide" id="tgEx"></div>
+<div style="text-align:center;margin-top:14px"><button class="btn hide" id="tgNext">다음 문제로 ➔</button><button class="btn hide" id="tgAgain">다시 도전하기</button></div>
+</section>
+
+</div></main>
+<footer>교재연구 스터디 자료 · 2026.08 · 예문은 수업용 쉬운 문장입니다</footer>
+<script>
+const W=[{"ch": 1, "w": "dangle", "ko": "대롱대롱 매달리다", "ex": "A shiny red apple was dangling from the low branch of the tree."}, {"ch": 1, "w": "chilly", "ko": "쌀쌀한", "ex": "You should wear a warm jacket because the morning wind is chilly."}, {"ch": 1, "w": "budding", "ko": "싹트기 시작하는", "ex": "Spring is here, and the budding flowers in the garden are starting to open."}, {"ch": 1, "w": "wisdom", "ko": "지혜", "ex": "The wise old grandfather shared his wisdom with the young children."}, {"ch": 1, "w": "humble", "ko": "겸손한", "ex": "The smart student was very humble about her perfect test score."}, {"ch": 1, "w": "responsibility", "ko": "책임, 중요한 임무", "ex": "Feeding the puppy every morning is my biggest responsibility at home."}, {"ch": 1, "w": "instruction", "ko": "지시 사항, 설명", "ex": "Please read the instructions carefully before you start building the Lego set."}, {"ch": 1, "w": "beneath", "ko": "~의 아래에", "ex": "Our cute cat was sleeping peacefully beneath the cozy kitchen table."}, {"ch": 1, "w": "mysterious", "ko": "신비로운, 기이한", "ex": "We found a mysterious old box with a locked lid in the dusty attic."}, {"ch": 2, "w": "shading", "ko": "빛을 가리기", "ex": "The baseball players were shading their eyes with their caps to catch the ball."}, {"ch": 2, "w": "squint", "ko": "눈을 가늘게 뜨고 보다", "ex": "She had to squint to read the tiny letters on the black chalkboard."}, {"ch": 2, "w": "shrub", "ko": "관목, 키 작은 나무", "ex": "My mom planted several green flower shrubs along the garden fence."}, {"ch": 2, "w": "sparse", "ko": "드문드문 있는", "ex": "Because of the dry soil, only sparse plants were growing on the hill."}, {"ch": 2, "w": "scorching", "ko": "태울 듯이 뜨거운", "ex": "We chose to stay inside the room during the scorching summer afternoon."}, {"ch": 2, "w": "patience", "ko": "인내심, 참을성", "ex": "It takes a lot of patience to complete a giant puzzle."}, {"ch": 2, "w": "dune", "ko": "모래 언덕", "ex": "The children had so much fun sliding down the high sand dune."}, {"ch": 2, "w": "eerily", "ko": "으스스하게, 묘하게", "ex": "The empty school hallway was eerily quiet on Sunday afternoon."}, {"ch": 2, "w": "gust", "ko": "세차게 불다, 돌풍", "ex": "A sudden cold wind gusted and blew the autumn leaves off the tree."}, {"ch": 3, "w": "drift", "ko": "바람에 날려 쌓인 더미", "ex": "The snowstorm made huge snow drifts in front of our main gate."}, {"ch": 3, "w": "haze", "ko": "안개, 희뿌연 아지랑이", "ex": "We couldn't see the top of the tall tower because of the grey haze."}, {"ch": 3, "w": "prowl", "ko": "살금살금 돌아다니다", "ex": "The sneaky wolf was prowling around the sheep farm at night."}, {"ch": 3, "w": "merchant", "ko": "상인", "ex": "The friendly merchant sold sweet strawberries at his market stall."}, {"ch": 3, "w": "caravan", "ko": "카라반, 사막 상인 집단", "ex": "The grand caravan traveled across the dry land with fifty camels."}, {"ch": 3, "w": "oasis", "ko": "오아시스", "ex": "The travelers finally drank cool water under the palm trees of the oasis."}, {"ch": 3, "w": "appreciate", "ko": "고마워하다", "ex": "I would highly appreciate it if you could hold the heavy door for me."}, {"ch": 3, "w": "gather", "ko": "모으다, 채집하다", "ex": "The kids walked around the park to gather pretty maple leaves."}, {"ch": 3, "w": "precious", "ko": "귀중한, 값비싼", "ex": "She keeps all her precious diamond rings in a small safety box."}, {"ch": 4, "w": "amble", "ko": "느긋하게 걷다", "ex": "After lunch, we ambled around the peaceful lake for an hour."}, {"ch": 4, "w": "suspiciously", "ko": "의심스럽게", "ex": "The brown guard dog looked suspiciously at the delivery man."}, {"ch": 4, "w": "groan", "ko": "끙끙거리다", "ex": "He groaned in bed because he had a terrible stomachache."}, {"ch": 4, "w": "protect", "ko": "보호하다, 지키다", "ex": "You must wear sunglasses to protect your sensitive eyes from bright sunlight."}, {"ch": 4, "w": "superior", "ko": "우수한, 더 월등한", "ex": "The quality of this new cotton jacket is far superior to the old one."}, {"ch": 4, "w": "sway", "ko": "흔들리다", "ex": "The tall grass on the field began to sway in the autumn breeze."}, {"ch": 4, "w": "seasick", "ko": "배멀미하는", "ex": "I forgot to take my medicine, so I felt seasick on the fishing boat."}, {"ch": 4, "w": "soothing", "ko": "마음을 달래는", "ex": "Listening to the sound of soft rain is very soothing when you are tired."}, {"ch": 4, "w": "coax", "ko": "달래다, 어르다", "ex": "The mother tried to coax her crying baby to sleep with a lullaby."}, {"ch": 5, "w": "bandit", "ko": "도적, 강도", "ex": "The brave police officer caught the sneaky train bandit."}, {"ch": 5, "w": "frantically", "ko": "정신없이, 허둥지둥", "ex": "She was frantically looking for her smartphone before she left for school."}, {"ch": 5, "w": "bolt", "ko": "갑자기 빠르게 달려 나가다", "ex": "The scared wild deer bolted into the dark bushes when it saw us."}, {"ch": 5, "w": "clutch", "ko": "단단히 움켜쥐다", "ex": "The frightened boy clutched his dad's big hand tightly."}, {"ch": 5, "w": "thunder", "ko": "우르릉거리며 질주하다", "ex": "The race cars thundered down the track at incredible speed."}, {"ch": 5, "w": "plod", "ko": "터덜터덜 걷다", "ex": "The tired workers had to plod back home after a long day of work."}, {"ch": 5, "w": "nestle", "ko": "아늑하게 자리 잡다", "ex": "The small wooden cabin was nestled snugly between the snow-covered pine trees."}, {"ch": 5, "w": "priceless", "ko": "값을 매길 수 없는", "ex": "The advice my teacher gave me was a priceless gift for my life."}, {"ch": 5, "w": "observe", "ko": "관찰하다", "ex": "The science class went outside to observe how ants build their homes."}], E=[{"s": "put", "a": "aside", "ko": "옆으로 치워 두다, 미뤄 두다", "ex": "Mina put her phone aside and started reading."}, {"s": "pull", "a": "out", "ko": "꺼내다, 끄집어내다", "ex": "The teacher pulled out a map of the desert."}, {"s": "take", "a": "off", "ko": "급히 출발하다, 휙 떠나다", "ex": "The bell rang, and the kids took off for the playground."}, {"s": "stare", "a": "up at", "ko": "~을 올려다보다", "ex": "We stared up at the tall clock tower."}, {"s": "pick", "a": "up", "ko": "집어 올리다", "ex": "Please pick up the pencil on the floor."}, {"s": "find", "a": "out", "ko": "알아내다", "ex": "Let's find out who wrote this letter."}, {"s": "bubble", "a": "up", "ko": "보글보글 솟아오르다", "ex": "Hot water bubbled up in the small pot."}, {"s": "break", "a": "in", "ko": "말을 자르고 끼어들다", "ex": "\"Wait, I know the answer!\" Tom broke in."}, {"s": "die", "a": "down", "ko": "서서히 잦아들다", "ex": "After the game, the noise in the gym died down."}, {"s": "prowl", "a": "around", "ko": "살금살금 돌아다니다", "ex": "A hungry cat was prowling around the kitchen."}, {"s": "look", "a": "up", "ko": "(사전 등에서) 찾아보다", "ex": "If you don't know a word, look it up."}, {"s": "gobble", "a": "down", "ko": "게걸스럽게 먹어 치우다", "ex": "My brother gobbled down his pizza in one minute."}, {"s": "put", "a": "out", "ko": "불을 끄다", "ex": "Dad put out the campfire with a bucket of water."}, {"s": "let", "a": "go", "ko": "손을 놓다, 놓아주다", "ex": "Hold the kite string. Don't let go!"}, {"s": "rise", "a": "up", "ko": "벌떡 일어서다, 우뚝 서다", "ex": "The big dog rose up when it heard the doorbell."}, {"s": "keep an eye", "a": "out for", "ko": "~이 나타나는지 지켜보다", "ex": "Keep an eye out for the school bus."}, {"s": "lose", "a": "one's way", "ko": "길을 잃다", "ex": "Take a map so you don't lose your way in the park."}, {"s": "share", "a": "with", "ko": "~와 함께 나누다", "ex": "I shared my cookies with my best friend."}, {"s": "easy for you", "a": "to say", "ko": "말이야 쉽지", "ex": "\"Just jump in the pool!\" \"Easy for you to say!\""}, {"s": "play", "a": "tug-of-war", "ko": "줄다리기를 하다", "ex": "Our class played tug-of-war on sports day."}, {"s": "protect it", "a": "with your life", "ko": "목숨을 걸고 지키다", "ex": "\"This is the last ticket. Protect it with your life!\""}, {"s": "hold", "a": "on for dear life", "ko": "필사적으로 매달리다", "ex": "On the roller coaster, I held on for dear life."}, {"s": "risk", "a": "one's life for", "ko": "~을 위해 목숨을 걸다", "ex": "Firefighters risk their lives for other people."}, {"s": "hold", "a": "one's breath", "ko": "숨을 죽이다, 숨을 참다", "ex": "We held our breath as the winner was announced."}, {"s": "wind", "a": "one's way through", "ko": "구불구불 헤치며 가다", "ex": "The small river winds its way through the village."}, {"s": "in the", "a": "heart of", "ko": "~의 한가운데에", "ex": "Our school is in the heart of the city."}, {"s": "be full", "a": "of", "ko": "~으로 가득 차 있다", "ex": "The library is full of interesting books."}, {"s": "be thick", "a": "with", "ko": "~으로 자욱하다", "ex": "After the fire, the air was thick with smoke."}, {"s": "be loaded", "a": "down with", "ko": "짐이 잔뜩 실려 있다", "ex": "The truck was loaded down with boxes."}, {"s": "cluck", "a": "one's tongue", "ko": "혀를 쯧쯧 차다", "ex": "Grandma clucked her tongue at the messy room."}, {"s": "rock", "a": "from side to side", "ko": "좌우로 흔들리다", "ex": "The little boat rocked from side to side in the wind."}, {"s": "slow", "a": "one's pace", "ko": "걸음 속도를 늦추다", "ex": "The runner slowed her pace near the hill."}, {"s": "heart", "a": "thump", "ko": "심장이 쿵쾅 뛰다", "ex": "My heart thumped before the big test."}, {"s": "run", "a": "like the wind", "ko": "바람처럼 빨리 달리다", "ex": "When the race started, Jisu ran like the wind."}, {"s": "bring", "a": "light to", "ko": "~에 빛을 가져다주다", "ex": "Good teachers bring light to their students' lives."}], G=[{"w": "sandstorm", "ko": "모래폭풍", "ex": ""}, {"w": "desert", "ko": "사막", "ex": ""}, {"w": "caliph", "ko": "칼리프 (이슬람 국가의 최고 통치자)", "ex": ""}, {"w": "wisdom", "ko": "지혜", "ex": "The wise old grandfather shared his wisdom with the young children."}, {"w": "camel", "ko": "낙타", "ex": ""}, {"w": "caravan", "ko": "대상 (사막을 여행하는 상인 무리)", "ex": "The grand caravan traveled across the dry land with fifty camels."}, {"w": "merchant", "ko": "상인", "ex": "The friendly merchant sold sweet strawberries at his market stall."}, {"w": "oasis", "ko": "오아시스", "ex": "The travelers finally drank cool water under the palm trees of the oasis."}, {"w": "dates", "ko": "대추야자", "ex": ""}, {"w": "bazaar", "ko": "바자르 (상점들이 모여 있는 시장)", "ex": ""}, {"w": "dome", "ko": "돔 (둥근 지붕)", "ex": ""}, {"w": "courtyard", "ko": "안뜰, 마당", "ex": ""}, {"w": "treasure", "ko": "보물", "ex": ""}, {"w": "philosopher", "ko": "철학자", "ex": ""}, {"w": "magic", "ko": "마법", "ex": ""}, {"w": "mission", "ko": "임무", "ex": ""}, {"w": "mysterious", "ko": "신비로운, 기이한", "ex": "We found a mysterious old box with a locked lid in the dusty attic."}, {"w": "empire", "ko": "제국", "ex": ""}, {"w": "chilly", "ko": "쌀쌀한, 추운", "ex": "You should wear a warm jacket because the morning wind is chilly."}, {"w": "blazing", "ko": "타오르는, 몹시 뜨거운", "ex": ""}, {"w": "horizon", "ko": "지평선", "ex": ""}, {"w": "brilliant", "ko": "훌륭한, 눈부신", "ex": ""}, {"w": "precious", "ko": "귀중한, 소중한", "ex": "She keeps all her precious diamond rings in a small safety box."}, {"w": "spices", "ko": "향신료", "ex": ""}, {"w": "vanilla", "ko": "바닐라", "ex": ""}, {"w": "cinnamon", "ko": "계피", "ex": ""}, {"w": "pepper", "ko": "후추", "ex": ""}, {"w": "moat", "ko": "해자 (성 주위에 판 못)", "ex": ""}, {"w": "avenue", "ko": "대로, 큰 길", "ex": ""}, {"w": "stable", "ko": "마구간", "ex": ""}, {"w": "mechanical", "ko": "기계로 작동되는", "ex": ""}, {"w": "mathematician", "ko": "수학자", "ex": ""}, {"w": "numeral", "ko": "숫자", "ex": ""}, {"w": "scholar", "ko": "학자", "ex": ""}, {"w": "scientist", "ko": "과학자", "ex": ""}, {"w": "carpet", "ko": "양탄자, 카펫", "ex": ""}, {"w": "observatory", "ko": "천문대", "ex": ""}, {"w": "laboratory", "ko": "실험실", "ex": ""}, {"w": "saddlebag", "ko": "안장 주머니", "ex": ""}, {"w": "bandits", "ko": "도적들, 노상강도", "ex": ""}, {"w": "respect", "ko": "존경하다, 존중하다", "ex": ""}, {"w": "humble", "ko": "겸손한", "ex": "The smart student was very humble about her perfect test score."}, {"w": "library", "ko": "도서관", "ex": ""}, {"w": "journey", "ko": "여행, 여정", "ex": ""}, {"w": "knowledge", "ko": "지식", "ex": ""}];
+const $=id=>document.getElementById(id);
+const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));['hang','speed','tug'].forEach(t=>$(t).classList.toggle('hide',t!==b.dataset.t));});
+/* ---------- Hangman ---------- */
+let hmList=[],hmI=0,hmCur,hmMiss=0,hmGot=new Set(),hmDone=false;
+const parts=[...document.querySelectorAll('#hmSvg .p')];
+function hmBuild(){const v=$('hmCh').value;hmList=shuf(v==='g'?G:W.filter(x=>v==='0'||x.ch===+v));hmI=0;hmNew();}
+function hmNew(){hmCur=hmList[hmI];hmMiss=0;hmGot=new Set();hmDone=false;
+ $('hmCount').textContent=`${hmI+1} / ${hmList.length}`;$('hmHint').firstChild.textContent=hmCur.ko;$('hmCh2').textContent=(hmCur.ch?`Chapter ${hmCur.ch} · `:'')+`${hmCur.w.length}글자`;
+ $('hmMsg').textContent='';$('hmEx').classList.add('hide');parts.forEach(p=>p.style.opacity=0);
+ $('hmKeys').innerHTML='';'abcdefghijklmnopqrstuvwxyz'.split('').forEach(ch=>{const b=document.createElement('button');b.textContent=ch;b.onclick=()=>hmGuess(ch,b);$('hmKeys').appendChild(b)});hmDraw();}
+function hmDraw(show){$('hmSlots').innerHTML=hmCur.w.split('').map(c=>`<span>${(show||hmGot.has(c))?c:''}</span>`).join('');}
+function hmEnd(win){hmDone=true;hmDraw(true);$('hmMsg').innerHTML=win?'<span style="color:var(--ok)">성공! 🐪 카라반이 무사히 지나갑니다.</span>':`<span style="color:var(--no)">아쉬워요! 정답은 <b>${hmCur.w}</b></span>`;
+ if(hmCur.ex){$('hmEx').innerHTML=`<b>Example</b> · ${hmCur.ex.replace(new RegExp('\\b('+hmCur.w+'\\w*)','i'),'<b>$1</b>')}`;$('hmEx').classList.remove('hide');}document.querySelectorAll('#hmKeys button').forEach(b=>b.disabled=true);}
+function hmGuess(ch,b){if(hmDone)return;b.disabled=true;
+ if(hmCur.w.includes(ch)){hmGot.add(ch);b.classList.add('hit');hmDraw();if(hmCur.w.split('').every(c=>hmGot.has(c)))hmEnd(true);}
+ else{b.classList.add('miss');parts[hmMiss].style.opacity=1;hmMiss++;if(hmMiss>=6)hmEnd(false);}}
+$('hmNext').onclick=()=>{hmI=(hmI+1)%hmList.length;if(hmI===0)hmList=shuf(hmList);hmNew();};
+$('hmShow').onclick=()=>{if(!hmDone)hmEnd(false)};
+$('hmCh').onchange=hmBuild;
+document.addEventListener('keydown',e=>{if($('hang').classList.contains('hide'))return;const k=e.key.toLowerCase();if(/^[a-z]$/.test(k)){const b=[...document.querySelectorAll('#hmKeys button')].find(x=>x.textContent===k&&!x.disabled);if(b)hmGuess(k,b);}});
+hmBuild();
+/* ---------- Speed quiz ---------- */
+const TEAMS=['1모둠','2모둠','3모둠','4모둠'];let spScore=[0,0,0,0],spTeam=0,spPool=[],spCur=null,spT=60,spTimer=null;
+function spTeamsDraw(){$('spTeams').innerHTML=TEAMS.map((t,i)=>`<div class="${i===spTeam?'on':''}" data-i="${i}">${t}<b>${spScore[i]}</b></div>`).join('');document.querySelectorAll('#spTeams div').forEach(d=>d.onclick=()=>{if(spTimer)return;spTeam=+d.dataset.i;spTeamsDraw();});}
+function spItem(){if(!spPool.length)spPool=shuf($('spSet').value==='g'?G.map(x=>({t:x.w,k:x.ko})):$('spSet').value==='w'?W.map(x=>({t:x.w,k:x.ko})):E.map(x=>({t:(x.s+' '+x.a).replace('...',''),k:x.ko})));spCur=spPool.pop();$('spWord').textContent=spCur.t;$('spKoTxt').textContent=spCur.k;$('spKoTxt').classList.toggle('off',!$('spKo').checked);}
+function spStop(){clearInterval(spTimer);spTimer=null;$('spOk').disabled=$('spPass').disabled=true;$('spStart').disabled=false;$('spWord').textContent='Time up!';$('spKoTxt').classList.remove('off');$('spKoTxt').textContent=`${TEAMS[spTeam]} ${spScore[spTeam]}점 · 다음 모둠을 고르세요`;}
+$('spStart').onclick=()=>{spT=60;$('spTime').textContent=spT;$('spTime').classList.remove('low');$('spOk').disabled=$('spPass').disabled=false;$('spStart').disabled=true;spItem();
+ spTimer=setInterval(()=>{spT--;$('spTime').textContent=spT;$('spTime').classList.toggle('low',spT<=10);if(spT<=0)spStop();},1000);};
+$('spOk').onclick=()=>{spScore[spTeam]++;spTeamsDraw();spItem();};
+$('spPass').onclick=()=>spItem();
+$('spKo').onchange=()=>$('spKoTxt').classList.toggle('off',!$('spKo').checked&&!!spTimer);
+$('spSet').onchange=()=>{spPool=[]};
+spTeamsDraw();
+/* ---------- Tug of war ---------- */
+let tgList=[],tgI=0,tgPos=50,tgJ=0,tgB=0,tgCur;
+function tgStart(){tgList=shuf(E);tgI=0;tgPos=50;tgJ=0;tgB=0;$('tgAgain').classList.add('hide');tgQ();}
+function tgQ(){tgCur=tgList[tgI];$('tgCount').textContent=`${tgI+1} / ${tgList.length}`;$('tgScore').textContent=`Team Jack ${tgJ} : ${tgB} Beauty`;
+ $('tgBag').style.left=tgPos+'%';$('tgStem').textContent=tgCur.s;$('tgBlank').textContent='?';$('tgKo').textContent='뜻: '+tgCur.ko;$('tgMsg').textContent='';$('tgEx').classList.add('hide');$('tgNext').classList.add('hide');
+ const wrong=shuf([...new Set(E.map(x=>x.a).filter(a=>a!==tgCur.a))]).slice(0,3);const opts=shuf([tgCur.a,...wrong]);
+ $('tgOpts').innerHTML='';opts.forEach(o=>{const b=document.createElement('button');b.textContent=o;b.onclick=()=>tgPick(o,b);$('tgOpts').appendChild(b)});}
+function tgPick(o,b){const btns=[...document.querySelectorAll('#tgOpts button')];btns.forEach(x=>{x.disabled=true;if(x.textContent===tgCur.a)x.classList.add('good')});
+ const ok=o===tgCur.a;$('tgBlank').textContent=tgCur.a;
+ if(ok){tgJ++;tgPos=Math.max(16,tgPos-6);$('tgMsg').innerHTML='<span style="color:var(--ok)">정답! 가방을 힘껏 끌어당겼어요! 🎉</span>';bump('tgJ');}
+ else{b.classList.add('bad');tgB++;tgPos=Math.min(84,tgPos+6);$('tgMsg').innerHTML='<span style="color:var(--no)">앗! Beauty가 가방을 끌고 갑니다! 🐪</span>';bump('tgB');}
+ $('tgBag').style.left=tgPos+'%';$('tgScore').textContent=`Team Jack ${tgJ} : ${tgB} Beauty`;
+ $('tgEx').innerHTML='<b>Example</b> · '+tgCur.ex;$('tgEx').classList.remove('hide');
+ if(tgI<tgList.length-1)$('tgNext').classList.remove('hide');else{$('tgMsg').innerHTML+=`<br>${tgJ>=tgB?'🏆 Team Jack이 가방을 지켰어요!':'🐪 이번엔 Beauty의 승리! 다시 도전해 볼까요?'}`;$('tgAgain').classList.remove('hide');}}
+function bump(id){const e=$(id);e.style.transform='scale(1.25) rotate(-8deg)';setTimeout(()=>e.style.transform='',400);}
+$('tgNext').onclick=()=>{tgI++;tgQ();};$('tgAgain').onclick=tgStart;
+tgStart();
+</script></body></html>
