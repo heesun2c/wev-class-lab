@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Story Sequencing · MTH #2 The Knight at Dawn</title>
+  <link rel="stylesheet" href="/story-sequencing/css/style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     CTRL BAR (프레젠테이션 상단 바)
+════════════════════════════════════════════════════ -->
+<div class="ctrl-bar" id="ctrlBar" style="display:none;">
+  <div class="ctrl-left">
+    <span class="round-badge-bar" id="roundBadge">Round 1</span>
+    <span class="ctrl-scene-counter" id="sceneCounter">1 / 5</span>
+  </div>
+  <div class="ctrl-center">
+    <div class="ctrl-progress-track">
+      <div class="ctrl-progress-fill" id="ctrlProgressFill" style="width:0%"></div>
+    </div>
+    <span class="ctrl-pct" id="ctrlPct">0%</span>
+  </div>
+  <div class="ctrl-right">
+    <button class="ctrl-btn" id="btnAudioChunk" title="원문 듣기">🔊</button>
+    <button class="ctrl-btn" id="btnHome" title="처음으로">🏠</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PROGRESS BAR (전체 진행)
+════════════════════════════════════════════════════ -->
+<div class="pres-progress" id="presProgress" style="display:none;">
+  <div class="pres-progress-fill" id="presProgressFill" style="width:0%"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     TITLE SCREEN
+════════════════════════════════════════════════════ -->
+<div class="title-screen" id="titleScreen">
+  <div class="title-inner">
+    <div class="title-badge">📖 Intensive Reading · Magic Tree House #2</div>
+    <h1 class="title-main">Story<br><em>Sequencing</em></h1>
+    <p class="title-sub">The Knight at Dawn · Chapters 1–2</p>
+    <div class="title-meta">
+      <div class="title-meta-item"><span class="tm-num">15</span><span class="tm-lbl">Scenes</span></div>
+      <div class="title-meta-item"><span class="tm-num">3</span><span class="tm-lbl">Rounds</span></div>
+      <div class="title-meta-item"><span class="tm-num">5</span><span class="tm-lbl">Scenes / Round</span></div>
+    </div>
+    <div class="title-actions">
+      <button class="btn-start" id="btnStart">▶ &nbsp;시작하기</button>
+      <a href="voca-priming.html" class="btn-secondary-link">🔤 &nbsp;Vocabulary Priming</a>
+    </div>
+    <p class="title-hint">Space / → : 다음 &nbsp;·&nbsp; ← : 이전</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE AREA
+════════════════════════════════════════════════════ -->
+<div class="slide-area" id="slideArea" style="display:none;">
+  <div class="slides-container" id="slidesContainer"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     BOTTOM CONTROL BAR
+════════════════════════════════════════════════════ -->
+<div class="bottom-ctrl" id="bottomCtrl" style="display:none;">
+  <div class="bc-left">
+    <button class="btn-prev" id="btnPrev">← 이전</button>
+  </div>
+  <div class="bc-center">
+    <span class="step-info" id="stepInfo">▶ 클릭해서 시작</span>
+  </div>
+  <div class="bc-right">
+    <button class="btn-next" id="btnNext">다음 →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     DONE SCREEN
+════════════════════════════════════════════════════ -->
+<div class="done-screen" id="doneScreen" style="display:none;">
+  <div class="done-inner">
+    <div class="done-icon">🏆</div>
+    <h2 class="done-title">Story Sequencing 완료!</h2>
+    <p class="done-sub">챕터 1–2의 전체 이야기를 함께 읽었습니다.<br>이제 내 말로 다시 이야기해볼까요?</p>
+    <div class="done-actions">
+      <button class="btn-start" id="btnRestart">↺ &nbsp;처음부터</button>
+      <a href="voca-priming.html" class="btn-secondary-link">🔤 &nbsp;Vocabulary Priming</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════════════ -->
+<script src="/story-sequencing/js/data.js"></script>
+<script src="/story-sequencing/js/speech.js"></script>
+<script src="/story-sequencing/js/app.js"></script>
+</body>
+</html>

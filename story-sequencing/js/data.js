@@ -1,0 +1,346 @@
+// Magic Tree House #2 - Story Sequencing Data (15 Scenes / 3 Rounds)
+// 장면 카드는 원문 대신 수업용 요약 문장을 씁니다. 핵심 표현만 짧게 인용합니다.
+
+const GAME_DATA = {
+  "title": "Story Sequencing",
+  "subtitle": "Magic Tree House #2: The Knight at Dawn",
+  "chapters": "Chapters 1–2",
+  "rounds": [
+    {
+      "id": 1,
+      "title": "Round 1: Recall and Fact Check",
+      "title_kr": "라운드 1: 회상과 사실 확인",
+      "goal": "Think about what happened yesterday and follow Jack and Annie's first conversation.",
+      "goal_kr": "어제의 모험을 떠올리고 잭과 애니의 첫 대화를 따라가봅시다.",
+      "focus_tags": [
+        "Recall",
+        "Facts vs. Guesses",
+        "Character"
+      ],
+      "teacher_note_kr": "1라운드 목표: 이전 모험(공룡 시대) 회상, 사실과 추측 구분, Jack과 Annie의 성격 차이 파악",
+      "teacher_note_en": "Round 1 goal: Recall Book 1 adventure, distinguish facts from guesses, notice Jack vs. Annie's personalities.",
+      "scene_range": [
+        0,
+        4
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Round 2: Leaving Home and Reaching the Tree House",
+      "title_kr": "라운드 2: 집을 나서서 트리하우스까지",
+      "goal": "Follow the early-morning movement from home to the tree house in the dark woods.",
+      "goal_kr": "이른 새벽 집에서 어두운 숲 속 트리하우스까지의 이동을 따라가봅시다.",
+      "focus_tags": [
+        "Movement",
+        "Atmosphere",
+        "Character contrast"
+      ],
+      "teacher_note_kr": "2라운드 목표: 이른 새벽 집 탈출 → 어두운 숲 → 트리하우스 발견의 공간 이동. 이동 동사와 분위기 표현 집중.",
+      "teacher_note_en": "Round 2 goal: Track the spatial movement from home to the tree house. Focus on movement verbs and atmosphere.",
+      "scene_range": [
+        5,
+        9
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Round 3: Magic Transition and New Adventure",
+      "title_kr": "라운드 3: 마법의 전이와 새로운 모험",
+      "goal": "Notice how the magic starts again and how the new adventure into the castle world begins.",
+      "goal_kr": "마법이 다시 시작되는 신호를 찾고 새로운 모험이 어떻게 시작되는지 확인해봅시다.",
+      "focus_tags": [
+        "Magic transition",
+        "New adventure",
+        "Series connection"
+      ],
+      "teacher_note_kr": "3라운드 목표: 시리즈 연속성(1권 회상), 새 책 발견, 소원 → 마법 발동 → 중세 성 도착의 전이 구조.",
+      "teacher_note_en": "Round 3 goal: Series continuity, discovering the new book, wish → magic transition → arrival at the castle.",
+      "scene_range": [
+        10,
+        14
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "r1_s1",
+      "round": 1,
+      "order": 1,
+      "scene_title": "Jack tries to understand yesterday's strange adventure",
+      "scene_title_kr": "잭이 어제의 이상한 모험을 이해하려 한다",
+      "chunk": "Jack wakes up at 5:30 and can't sleep because of what happened yesterday.",
+      "key_phrase": "trying to figure them out",
+      "support_phrase": "",
+      "hint_character": "Jack is alone, thinking carefully about yesterday.",
+      "hint_place": "This happens at home — in Jack's room, early in the morning.",
+      "hint_action": "He is looking back at what happened the day before.",
+      "clue_text": "Jack wakes up at 5:30 and can't sleep because of what happened yesterday.",
+      "why_here": "This is the very first moment of the story — Jack wakes up early and tries to make sense of the previous day's strange adventure.",
+      "teacher_note_kr": "이 장면은 이야기의 출발점입니다. '잠 못 드는 잭'이 아니라 '어제 일을 이해하려는 잭'으로 장면 기능을 강조하세요. 'Too early to get up'은 새벽 5:30의 시간적 배경을 잡아줍니다.",
+      "teacher_note_en": "Emphasize: not 'Jack cannot sleep' but 'Jack is trying to make sense of yesterday.' 'Too early to get up' anchors the 5:30 AM setting.",
+      "retelling_prompt": "What time does Jack wake up? Why can't he sleep?"
+    },
+    {
+      "id": "r1_s2",
+      "round": 1,
+      "order": 2,
+      "scene_title": "Jack turns on the light and picks up his notebook",
+      "scene_title_kr": "잭이 불을 켜고 노트를 집어 든다",
+      "chunk": "Jack picks up his notebook and reads his list — and thinks about who could possibly believe what happened.",
+      "key_phrase": "Who was going to believe any of this?",
+      "support_phrase": "",
+      "hint_character": "Jack is alone, holding his notebook.",
+      "hint_place": "Jack is still in his room.",
+      "hint_action": "He looks at a list he made the night before and wonders who would believe him.",
+      "clue_text": "Jack picks up his notebook and reads his list — and thinks about who could possibly believe what happened.",
+      "why_here": "This follows directly from Scene 1. Jack turns to his notebook for facts, and the line about Annie sets up why she's the only one he can share this with.",
+      "teacher_note_kr": "'Who was going to believe any of this?'는 잭의 내적 독백입니다. Annie만이 믿어줄 수 있다는 설정이 두 인물의 관계를 보여줍니다. 다음 장면에서 Annie가 등장하는 연결 고리입니다.",
+      "teacher_note_en": "'Who was going to believe any of this?' is Jack's internal thought. It sets up Annie as the only person who shares his secret — leading directly to her appearance in Scene 3.",
+      "retelling_prompt": "What does Jack pick up? Who does he think could believe his story? Why?"
+    },
+    {
+      "id": "r1_s3",
+      "round": 1,
+      "order": 3,
+      "scene_title": "Annie appears and corrects Jack about the medallion",
+      "scene_title_kr": "애니가 나타나 메달리온에 대해 잭을 수정해 준다",
+      "chunk": "Annie comes to Jack's room because she can't sleep either. She reads his notebook and asks about the 'gold medal,' but Jack corrects her: it's a medallion.",
+      "key_phrase": "You mean the gold medallion",
+      "support_phrase": "",
+      "hint_character": "Annie appears at Jack's door. Both of them can't sleep.",
+      "hint_place": "Jack's room — Annie is standing in the doorway.",
+      "hint_action": "Annie reads Jack's list and asks about something. Jack corrects her word.",
+      "clue_text": "Annie comes to Jack's room because she can't sleep either. She reads his notebook and asks about the 'gold medal,' but Jack corrects her: it's a medallion.",
+      "why_here": "Annie enters the scene for the first time. Her question about the 'medal' gives Jack the chance to correct her — showing his careful, fact-focused personality.",
+      "teacher_note_kr": "'You mean the gold medallion'은 상대방의 말을 수정할 때 쓰는 핵심 표현입니다. Jack의 정확성에 대한 집착이 처음 드러나는 장면입니다.",
+      "teacher_note_en": "'You mean...' is a key expression for correcting someone's word choice. This is the first scene where Jack's obsession with accuracy is clearly shown.",
+      "retelling_prompt": "Why does Annie come to Jack's room? What mistake does she make? How does Jack correct her?"
+    },
+    {
+      "id": "r1_s4",
+      "round": 1,
+      "order": 4,
+      "scene_title": "Jack insists on facts — Annie thinks there is magic",
+      "scene_title_kr": "잭은 사실만 고집하고 애니는 마법을 믿는다",
+      "chunk": "Annie asks about a 'magic person,' but Jack says they don't know that for sure. Annie lists what they do know. Jack corrects 'medal' again — and says he only writes facts.",
+      "key_phrase": "I'm just writing the facts. The stuff we know for sure.",
+      "support_phrase": "",
+      "hint_character": "Jack and Annie are arguing. Jack corrects Annie again — for the third time.",
+      "hint_place": "Still in Jack's room.",
+      "hint_action": "Annie keeps saying 'medal' and 'magic person.' Jack keeps correcting her and insists on facts only.",
+      "clue_text": "Annie asks about a 'magic person,' but Jack says they don't know that for sure. Annie lists what they do know. Jack corrects 'medal' again — and says he only writes facts.",
+      "why_here": "This scene shows the core difference between Jack (facts) and Annie (imagination). Jack corrects 'medallion' for the third time — showing his character. Annie's 'someone' list sets up the mystery.",
+      "teacher_note_kr": "'facts / the stuff we know for sure'가 이 장면의 핵심입니다. Jack이 medallion을 세 번 수정하는 것도 중요한 포인트. Annie의 'someone' 목록은 트리하우스 미스터리를 설정합니다.",
+      "teacher_note_en": "'The facts. The stuff we know for sure.' captures Jack's character perfectly. Note: Jack corrects 'medallion' for the third time here. Annie's 'someone' list builds the mystery.",
+      "retelling_prompt": "What does Annie think about the tree house? What does Jack say about 'facts'? Who is more careful?"
+    },
+    {
+      "id": "r1_s5",
+      "round": 1,
+      "order": 5,
+      "scene_title": "Annie wants to go back to the tree house right now",
+      "scene_title_kr": "애니가 지금 당장 트리하우스로 돌아가고 싶어한다",
+      "chunk": "Annie says they should go to the tree house now to find out if the magic person is real. Jack worries about danger — but Annie says she's going anyway.",
+      "key_phrase": "What if the 'magic person' was mean?",
+      "support_phrase": "",
+      "hint_character": "Annie wants to go. Jack is worried and hesitating.",
+      "hint_place": "Still at home. It's before sunrise.",
+      "hint_action": "Annie suggests going to the tree house right now. Jack worries about what might happen.",
+      "clue_text": "Annie says they should go to the tree house now to find out if the magic person is real. Jack worries about danger — but Annie says she's going anyway.",
+      "why_here": "Annie drives the story forward. Jack's 'What if?' worry appears for the first time here. Annie's 'Well, I'm going' is the turning point that forces them to leave.",
+      "teacher_note_kr": "'What if...?'가 처음 등장하는 장면입니다. Jack의 걱정하는 성격이 가장 잘 드러납니다. Annie의 'Well, I'm going'이 행동의 전환점입니다.",
+      "teacher_note_en": "First appearance of Jack's 'What if...?' worry pattern. 'Well, I'm going' is Annie's key line — she drives the action forward regardless of Jack's hesitation.",
+      "retelling_prompt": "What does Annie want to do? What is Jack worried about? What does Annie finally say?"
+    },
+    {
+      "id": "r2_s6",
+      "round": 2,
+      "order": 6,
+      "scene_title": "Jack and Annie sneak out of the house before dawn",
+      "scene_title_kr": "잭과 애니가 새벽에 집을 몰래 빠져나간다",
+      "chunk": "Jack gets dressed and quietly sneaks downstairs. Annie is waiting at the back door with a flashlight — already calling it a 'magic wand.'",
+      "key_phrase": "Don't wake up Mom and Dad",
+      "support_phrase": "",
+      "hint_character": "Jack gets dressed quietly. Annie is already waiting at the door.",
+      "hint_place": "Inside the house — stairs and the back door.",
+      "hint_action": "They are sneaking out before their parents wake up. Annie has a flashlight.",
+      "clue_text": "Jack gets dressed and quietly sneaks downstairs. Annie is waiting at the back door with a flashlight — already calling it a 'magic wand.'",
+      "why_here": "The escape from home begins. Annie's 'magic wand' foreshadows the real magic to come. Jack's 'Don't wake up Mom and Dad' sets the secretive, tense tone.",
+      "teacher_note_kr": "'crept downstairs'의 이동 동사와 'Don't wake up Mom and Dad'의 긴박감을 함께 지도하세요. Annie가 손전등을 'magic wand'라고 부르는 것은 이후 장면을 위한 복선입니다.",
+      "teacher_note_en": "Focus on movement verbs: 'crept.' Annie calling the flashlight a 'magic wand' is a foreshadowing of the real magic — a key connection to later scenes.",
+      "retelling_prompt": "What does Jack put on? Where is Annie waiting? What does she have in her hand?"
+    },
+    {
+      "id": "r2_s7",
+      "round": 2,
+      "order": 7,
+      "scene_title": "They slip out and dash across the dark lawn into the woods",
+      "scene_title_kr": "어두운 잔디를 가로질러 숲속으로 달려 들어간다",
+      "chunk": "They slip out the back door into the early-morning air. A neighbor's dog barks, but Annie quietly tells it to stop — and it does. Then they run to the woods.",
+      "key_phrase": "Animals always seemed to do what Annie said",
+      "support_phrase": "",
+      "hint_character": "Jack and Annie are outside. A dog barks but Annie quiets it.",
+      "hint_place": "Outside the house — the dark lawn and the edge of the woods.",
+      "hint_action": "They sneak outside and run across the lawn to the woods. Annie talks to a dog.",
+      "clue_text": "They slip out the back door into the early-morning air. A neighbor's dog barks, but Annie quietly tells it to stop — and it does. Then they run to the woods.",
+      "why_here": "The story moves from inside to outside. The detail about animals obeying Annie is a quiet character note — showing something special about her. Movement verbs 'slipped out' and 'dashed' build momentum.",
+      "teacher_note_kr": "'Animals always seemed to do what Annie said'는 Annie의 특별한 성격을 보여주는 서술적 힌트입니다. 'slipped out / dashed across' 이동 동사 클러스터를 함께 다루세요.",
+      "teacher_note_en": "'Animals always seemed to do what Annie said' is a quiet character clue about Annie. Pair movement verbs 'slipped out' and 'dashed across' as a cluster.",
+      "retelling_prompt": "What sounds do they hear outside? What does Annie do when the dog barks? What do they do next?"
+    },
+    {
+      "id": "r2_s8",
+      "round": 2,
+      "order": 8,
+      "scene_title": "Annie scares Jack in the woods — 'Cut it out!'",
+      "scene_title_kr": "애니가 숲속에서 잭을 놀라게 한다 — 'Cut it out!'",
+      "chunk": "They walk step by step through the dark, scary woods. Annie suddenly shines the light in Jack's face — 'Gotcha!' Jack jumps, then tells her to cut it out and be serious.",
+      "key_phrase": "Cut it out!",
+      "support_phrase": "",
+      "hint_character": "Jack is nervous in the dark woods. Annie is playing around.",
+      "hint_place": "Inside the dark Frog Creek woods.",
+      "hint_action": "Annie suddenly shines the flashlight in Jack's face to scare him. Jack tells her to stop.",
+      "clue_text": "They walk step by step through the dark, scary woods. Annie suddenly shines the light in Jack's face — 'Gotcha!' Jack jumps, then tells her to cut it out and be serious.",
+      "why_here": "Jack vs. Annie personality contrast at its sharpest: nervous Jack vs. playful Annie. 'Step by step' and 'Jack held his breath' show the tense atmosphere. 'This is serious' is Jack's defining line.",
+      "teacher_note_kr": "'Cut it out!'는 장난을 멈추라는 구어 표현입니다. 'Step by step / This is serious'와 함께 Jack의 긴장감, Annie의 장난기 대비를 강조하세요.",
+      "teacher_note_en": "'Cut it out!' means 'stop it' in spoken English. Use this scene to contrast Jack's fear and seriousness with Annie's playfulness. 'Step by step' builds the tense forest atmosphere.",
+      "retelling_prompt": "How do Jack and Annie walk through the woods? What does Annie do to scare Jack? How does Jack react?"
+    },
+    {
+      "id": "r2_s9",
+      "round": 2,
+      "order": 9,
+      "scene_title": "Annie spots the tree house — and immediately starts climbing",
+      "scene_title_kr": "애니가 트리하우스를 발견하고 바로 올라가기 시작한다",
+      "chunk": "Annie shines her flashlight through the treetops and finds the tree house. She lights up the ladder all the way to the ground — then starts climbing without hesitation.",
+      "key_phrase": "There it was.",
+      "support_phrase": "",
+      "hint_character": "Annie is excited. She spots something and starts climbing right away.",
+      "hint_place": "The Frog Creek woods — at the tallest oak tree.",
+      "hint_action": "Annie shines the light upward and finds the tree house. She immediately starts climbing the ladder.",
+      "clue_text": "Annie shines her flashlight through the treetops and finds the tree house. She lights up the ladder all the way to the ground — then starts climbing without hesitation.",
+      "why_here": "'There it was.' is the moment of discovery — short, punchy, emotionally powerful. Annie's immediate 'I'm going up' shows her impulsive character perfectly.",
+      "teacher_note_kr": "'There it was.'는 극적 발견의 순간을 나타내는 짧고 강렬한 표현입니다. Annie가 발견 즉시 'I'm going up'으로 행동하는 것이 그녀의 성격을 보여줍니다.",
+      "teacher_note_en": "'There it was.' — three words that signal discovery and emotional payoff. Notice how Annie immediately acts ('I'm going up') without any hesitation or planning.",
+      "retelling_prompt": "How does Annie find the tree house? What does she do as soon as she finds it? What does 'There it was' feel like?"
+    },
+    {
+      "id": "r2_s10",
+      "round": 2,
+      "order": 10,
+      "scene_title": "Jack climbs up alone in the dark — dawn is breaking",
+      "scene_title_kr": "잭이 혼자 어둠 속에서 올라간다 — 새벽이 밝아온다",
+      "chunk": "Annie disappears up the ladder, leaving Jack alone in the dark. He worries — 'What if someone was in the tree house?' — but the thought of the books makes him climb. As he nears the top, dawn begins to break.",
+      "key_phrase": "What if someone was in the tree house?",
+      "support_phrase": "",
+      "hint_character": "Annie has gone up. Jack is left alone in the dark, scared.",
+      "hint_place": "At the bottom of the tall ladder, in the dark woods.",
+      "hint_action": "Jack is left alone in the dark. He considers going home — but thinks of the books. He climbs up. Dawn begins.",
+      "clue_text": "Annie disappears up the ladder, leaving Jack alone in the dark. He worries — 'What if someone was in the tree house?' — but the thought of the books makes him climb. As he nears the top, dawn begins to break.",
+      "why_here": "Jack's 'What if?' worry appears again. His decision to climb despite fear — motivated by books — shows his character. 'Dawn was starting to break' marks the transition from night to day.",
+      "teacher_note_kr": "'What if someone was in the tree house?'는 Jack의 걱정 패턴의 두 번째 등장입니다. 책에 대한 생각이 그를 움직이게 한다는 점이 Jack 캐릭터의 핵심입니다. 새벽빛은 시간 전환의 신호입니다.",
+      "teacher_note_en": "Second appearance of Jack's 'What if?' pattern. He's motivated by books, not bravery — that's key to his character. 'Dawn was starting to break' signals a visual and emotional transition.",
+      "retelling_prompt": "Why is Jack alone in the dark? What makes him decide to climb? What does he see as he gets near the top?"
+    },
+    {
+      "id": "r3_s11",
+      "round": 3,
+      "order": 11,
+      "scene_title": "Inside the tree house — the books are still here",
+      "scene_title_kr": "트리하우스 안 — 책들이 여전히 그 자리에 있다",
+      "chunk": "Jack crawls inside the dark tree house. Annie's light reveals the books are still there. She stops at the dinosaur book — 'Remember the Tyrannosaurus?' Jack shudders at the memory.",
+      "key_phrase": "Remember the Tyrannosaurus?",
+      "support_phrase": "",
+      "hint_character": "Both Jack and Annie are inside the tree house. Annie is excited. Jack shudders at a memory.",
+      "hint_place": "Inside the tree house — dark, with books scattered around.",
+      "hint_action": "Annie shines her light on the books. She stops at the dinosaur book and asks Jack if he remembers the T-rex.",
+      "clue_text": "Jack crawls inside the dark tree house. Annie's light reveals the books are still there. She stops at the dinosaur book — 'Remember the Tyrannosaurus?' Jack shudders at the memory.",
+      "why_here": "This scene connects Book 1 to Book 2 — the series continuity. 'Remember the Tyrannosaurus?' brings back their first adventure. Jack's shudder shows how real and scary it was.",
+      "teacher_note_kr": "'Remember the Tyrannosaurus?'는 시리즈 연속성의 핵심 표현입니다. Jack이 몸서리를 치는 것(shuddered)이 이전 모험이 얼마나 실제적이었는지를 보여줍니다.",
+      "teacher_note_en": "'Remember the Tyrannosaurus?' is the key series-continuity expression. Jack's 'shuddered' reaction — not just memory, but physical — shows how vivid and real their first adventure was.",
+      "retelling_prompt": "What do they find inside the tree house? What book does Annie stop at? How does Jack react when Annie mentions the Tyrannosaurus?"
+    },
+    {
+      "id": "r3_s12",
+      "round": 3,
+      "order": 12,
+      "scene_title": "Annie finds the castle book — Jack tries to stop her",
+      "scene_title_kr": "애니가 성 책을 발견하고 잭은 막으려 한다",
+      "chunk": "Annie finds the book about knights and castles — 'There's my favorite.' She opens it to the bookmarked page: a knight on a black horse riding toward a castle. Jack immediately says 'Close that book. I know what you're thinking.'",
+      "key_phrase": "I know what you're thinking.",
+      "support_phrase": "",
+      "hint_character": "Annie finds a new book and is excited. Jack immediately senses trouble.",
+      "hint_place": "Inside the tree house — looking at books.",
+      "hint_action": "Annie finds the castle book with a bookmark. She opens it to a knight on a black horse. Jack tells her to close it.",
+      "clue_text": "Annie finds the book about knights and castles — 'There's my favorite.' She opens it to the bookmarked page: a knight on a black horse riding toward a castle. Jack immediately says 'Close that book. I know what you're thinking.'",
+      "why_here": "The castle book is the trigger object for the whole adventure. The red vs. blue bookmark distinction is a key detail. 'I know what you're thinking' shows Jack's understanding of Annie — and his fear.",
+      "teacher_note_kr": "빨간 책갈피(Pennsylvania → 집으로)와 파란 책갈피(castle → 새 모험)의 대비는 중요한 장치입니다. 'I know what you're thinking'은 잭이 애니를 잘 알고 있음을 보여주는 표현입니다.",
+      "teacher_note_en": "Red bookmark (Pennsylvania = home) vs. blue bookmark (castle = new adventure) is a key narrative device. 'I know what you're thinking' shows Jack's deep — and fearful — understanding of Annie.",
+      "retelling_prompt": "What two books do they look at? What is the difference between the bookmarks? Why does Jack say 'I know what you're thinking'?"
+    },
+    {
+      "id": "r3_s13",
+      "round": 3,
+      "order": 13,
+      "scene_title": "Annie makes a wish — it's too late to stop her",
+      "scene_title_kr": "애니가 소원을 말한다 — 이미 늦었다",
+      "chunk": "Jack shouts 'Don't, Annie!' but Annie says the wish: 'We wish we could see this guy for real.' A horse neighs — 'Neeee-hhhh!' — and when they look out, there is a real knight in shining armor on a black horse.",
+      "key_phrase": "We wish we could see this guy for real",
+      "support_phrase": "",
+      "hint_character": "Annie says the wish out loud. Jack tries to stop her — but it's too late.",
+      "hint_place": "Inside the tree house — then looking out the window.",
+      "hint_action": "Annie makes a wish. Jack shouts 'No, we don't!' They hear a horse sound and look out the window to see a real knight.",
+      "clue_text": "Jack shouts 'Don't, Annie!' but Annie says the wish: 'We wish we could see this guy for real.' A horse neighs — 'Neeee-hhhh!' — and when they look out, there is a real knight in shining armor on a black horse.",
+      "why_here": "This is the trigger moment. Annie's exact words activate the magic. The horse sound 'Neeee-hhhh!' is a key sensory signal. Jack's 'Oh no' shows he immediately understands what has happened.",
+      "teacher_note_kr": "Annie의 소원 표현은 'I wish'가 아니라 'We wish'입니다 — 중요한 원문 디테일입니다. 말 울음소리 'Neeee-hhhh!'는 마법 발동의 청각적 신호입니다.",
+      "teacher_note_en": "Note: Annie says 'WE wish' not 'I wish' — important verbatim detail. The horse sound 'Neeee-hhhh!' is the auditory signal that the magic is already working.",
+      "retelling_prompt": "What exactly does Annie say to make the wish? What sound do they hear? What do they see when they look out the window?"
+    },
+    {
+      "id": "r3_s14",
+      "round": 3,
+      "order": 14,
+      "scene_title": "The wind moans, the tree house spins — it's happening again",
+      "scene_title_kr": "바람이 신음하고 트리하우스가 회전한다 — 또 일어나고 있다",
+      "chunk": "The wind begins to moan and the leaves tremble. 'It was happening again.' Annie shouts to get down. The tree house spins faster and faster — then everything goes absolutely still.",
+      "key_phrase": "It was happening again.",
+      "support_phrase": "",
+      "hint_character": "No one is in control — the magic is happening to them.",
+      "hint_place": "Inside the spinning tree house.",
+      "hint_action": "The wind moans, the leaves shake, the tree house spins faster and faster — then suddenly everything stops.",
+      "clue_text": "The wind begins to moan and the leaves tremble. 'It was happening again.' Annie shouts to get down. The tree house spins faster and faster — then everything goes absolutely still.",
+      "why_here": "'It was happening again.' is the most important line — three words that signal the MTH series magic formula. The 'began to moan / shook harder / spun faster' escalation followed by 'absolutely still' is the transition structure.",
+      "teacher_note_kr": "'It was happening again.'이 이 장면의 핵심입니다. 'began to moan → shook harder → spun faster → absolutely still'의 단계적 고조 구조를 noticing하게 하세요. MTH 시리즈의 반복 마법 공식입니다.",
+      "teacher_note_en": "'It was happening again.' — the series' magic formula in three words. Have students notice the escalation: moan → harder → faster → absolutely still. This structure repeats in every MTH book.",
+      "retelling_prompt": "What happens to the wind and the leaves? What does 'It was happening again' mean? What happens at the very end of this scene?"
+    },
+    {
+      "id": "r3_s15",
+      "round": 3,
+      "order": 15,
+      "scene_title": "They arrive — Annie wants to take a peek at the castle",
+      "scene_title_kr": "그들이 도착한다 — 애니가 성을 살짝 보러 가려 한다",
+      "chunk": "Jack opens his eyes to fog and a huge castle. He says they need to go home and plan. Annie says no — 'A teeny peek' — and slides down. Jack groans and accepts he has to follow her.",
+      "key_phrase": "A teeny peek",
+      "support_phrase": "",
+      "hint_character": "Jack wants to go home and make a plan. Annie wants to stay and explore.",
+      "hint_place": "The tree house — now in a new oak tree, near a foggy castle.",
+      "hint_action": "Jack opens his eyes to see a huge castle in the fog. Annie says 'A teeny peek' and slides down the ladder. Jack gives up and follows.",
+      "clue_text": "Jack opens his eyes to fog and a huge castle. He says they need to go home and plan. Annie says no — 'A teeny peek' — and slides down. Jack groans and accepts he has to follow her.",
+      "why_here": "The final Jack vs. Annie standoff of these chapters. 'A teeny peek' is Annie's key expression — minimizing the danger to make it sound harmless. 'Jack groaned. Okay, she had won.' ends the chapters with Jack accepting Annie's lead.",
+      "teacher_note_kr": "'A teeny peek'는 위험을 최소화해서 말하는 Annie의 표현 방식입니다. 'Jack groaned. Okay, she had won.'으로 챕터가 마무리되며, Annie가 항상 행동을 이끈다는 패턴이 확립됩니다.",
+      "teacher_note_en": "'A teeny peek' — Annie minimizes the danger to make it sound harmless. 'Jack groaned. Okay, she had won.' is the perfect closing line: Jack always ends up following Annie into the adventure.",
+      "retelling_prompt": "What does Jack see when he opens his eyes? What does Jack want to do? What does Annie say and do? How does the chapter end?"
+    }
+  ]
+};
+
+// Helper: get scenes by round
+function getScenesByRound(roundId) {
+  return GAME_DATA.scenes.filter(s => s.round === roundId);
+}
+
+// Helper: get round info
+function getRound(roundId) {
+  return GAME_DATA.rounds.find(r => r.id === roundId);
+}
